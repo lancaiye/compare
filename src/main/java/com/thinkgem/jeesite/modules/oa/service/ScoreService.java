@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.CrudService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.oa.entity.Ktemplate;
+import com.thinkgem.jeesite.modules.oa.entity.Options;
 import com.thinkgem.jeesite.modules.oa.entity.Score;
+import com.thinkgem.jeesite.modules.oa.dao.OptionsDao;
 import com.thinkgem.jeesite.modules.oa.dao.ScoreDao;
 
 /**
@@ -29,6 +32,7 @@ public class ScoreService extends CrudService<ScoreDao, Score> {
 		Score score = super.get(id);
 		return score;
 	}
+		
 	
 	public List<Score> findList(Score score) {
 		return super.findList(score);

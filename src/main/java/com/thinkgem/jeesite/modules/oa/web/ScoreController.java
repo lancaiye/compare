@@ -19,12 +19,15 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.oa.dao.KtemplateDao;
 import com.thinkgem.jeesite.modules.oa.entity.Ktemplate;
 import com.thinkgem.jeesite.modules.oa.entity.Score;
 import com.thinkgem.jeesite.modules.oa.service.ScoreService;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+
+import freemarker.template.Template;
 
 /**
  * 绩效自我评分Controller
@@ -64,9 +67,15 @@ public class ScoreController extends BaseController {
 		User loginUser = UserUtils.getUser();
 		Office office = loginUser.getOffice();
 		
-//		Ktemplate ktemplate =office.getName(); 
+		Ktemplate ktemplate = loginUser.getTemplate();
 		
-//		model.addAttribute("ktemplate",ktemplate);
+		System.out.println(ktemplate+"@@@@@@@");
+		//id=1
+		System.out.println(loginUser.getId()+"!!!!!!!!!!");
+		System.out.println(office.getId()+"~~~~~~~~~~");
+
+		
+		
 		model.addAttribute("office", office);
 		model.addAttribute("score", score);
 		return "modules/oa/scoreForm";

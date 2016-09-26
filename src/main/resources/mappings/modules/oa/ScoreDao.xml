@@ -17,6 +17,7 @@
 	</sql>
 	
 	<sql id="scoreJoins">
+	LEFT JOIN oa_kpi_options b ON b.id = a.kpi_options_id
 	</sql>
     
 	<select id="get" resultType="Score">
