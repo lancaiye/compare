@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.test.dao.test.AttendanceRecordDao">
+
+	<sql id="attendanceRecordColumns">
+		a.id AS "id",
+		a.office AS "office",
+		a.name AS "name",
+		a.attendance_no AS "attendanceNo",
+		a.working_time AS "workingTime",
+		a.record_status AS "recordStatus",
+		a.machine_id AS "machineId",
+		a.num_id AS "numId",
+		a.trades_id AS "tradesId",
+		a.compare_mode AS "compareMode",
+		a.card_number AS "cardNumber",
+		a.remarks AS "remarks"
+	</sql>
+
+
+
+	<sql id="attendanceRecordJoins">
+	LEFT JOIN sys_office o ON o.name = a.office
+	</sql>
+
+	<select id="get" resultType="AttendanceRecord">
+		SELECT
+		<include refid="attendanceRecordColumns" />
+		FROM attendance_record a
+		<include refid="attendanceRecordJoins" />
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="AttendanceRecord">
+		SELECT
+		<include refid="attendanceRecordColumns" />
+		FROM attendance_record a
+		<include refid="attendanceRecordJoins" />
+		<where>
+			<if test="office != null and office != ''">
+				AND a.office LIKE
+				CONCAT('%',#{office},'%')
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE
+				CONCAT('%',#{name},'%')
+			</if>
+			 <if test="beginDate != null and beginDate != ''">
+				AND a.working_time <![CDATA[ >= #{beginDate} ]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND a.working_time <![CDATA[ <= #{endDate} ]]>
+			</if> 
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="AttendanceRecord">
+		SELECT
+		<include refid="attendanceRecordColumns" />
+		FROM attendance_record a
+		<include refid="attendanceRecordJoins" />
+		<where>
+
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+
+
+
+
+ 	
+	<insert id="insert">
+		INSERT INTO attendance_record(
+		id,
+		office,
+		name,
+		attendance_no,
+		working_time,
+		record_status,
+		machine_id,
+		num_id,
+		trades_id,
+		compare_mode,
+		card_number,
+		remarks
+		) VALUES (
+		#{id},
+		#{office},
+		#{name},
+		#{attendanceNo},
+		#{workingTime},
+		#{recordStatus},
+		#{machineId},
+		#{numId},
+		#{tradesId},
+		#{compareMode},
+		#{cardNumber},
+		#{remarks}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE attendance_record SET
+		office = #{office},
+		name = #{name}, 
+		attendance_no = #{attendanceNo},
+		working_time = #{workingTime},
+		record_status = #{recordStatus},
+		machine_id = #{machineId},
+		num_id =
+		#{numId},
+		trades_id = #{tradesId},
+		compare_mode = #{compareMode},
+		card_number = #{cardNumber},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		DELETE FROM attendance_record
+		WHERE id = #{id}
+	</update>
+	
+	<update id="setstatus">
+		UPDATE attendance_record SET
+			remarks = "CHIDAO"
+		WHERE 	
+			<if test="beginDate != null and beginDate != ''">
+				AND a.working_time <![CDATA[ >= #{beginDate} ]]>
+			</if>
+			<if test="endDate != null and endDate != ''">
+				AND a.working_time <![CDATA[ <= #{endDate} ]]>
+			</if> 
+	</update>
+
+</mapper>
