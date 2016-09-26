@@ -64,7 +64,7 @@ public class ScoreController extends BaseController {
 		User loginUser = UserUtils.getUser();
 		Office office = loginUser.getOffice();
 		
-//		Ktemplate ktemplate =office.getName();
+//		Ktemplate ktemplate =office.getName(); 
 		
 //		model.addAttribute("ktemplate",ktemplate);
 		model.addAttribute("office", office);
